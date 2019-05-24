@@ -1,0 +1,41 @@
+Our DB name is EmployeeDB. 
+USE EmployeeDB;
+CREATE TABLE `employee` (
+	`EmpID` int(11) NOT NULL AUTO_INCREMENT,
+    `Name` varchar(45) DEFAULT NULL,
+    `Empcode` varchar(45) DEFAULT NULL,
+    `Salary` int(11) DEFAULT NULL,
+    PRIMARY KEY (`EmpID`)
+) ENGINE=InnoDB AUTO_INCREMENT=0;
+
+// 
+Use EmployeeDB;
+lock tables `employee` write;
+insert into `employee` values (1, 'Tej Singh', 'EMP90', 20150),(2, 'Veer Singh', 'EMP91', 20150),(3, 'sada Singh', 'EMP92', 20150),(4, 'Tej Sih', 'EMP93', 20150);
+UNLOCK TABLES;
+
+// store program in mysql
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EmployeeAddOrEdit`(
+IN _EmpID INT,
+IN _Name varchar(45),
+In _EmpCode varchar(45),
+IN _Salary int
+)
+BEGIN
+IF _EmpID = 0 then
+insert into employee(Name,EmpCode,Salary)
+values (_Name,_EmpCode,_Salary);
+
+SET _EmpID = last_insert_id();
+else
+update Employee
+SET
+Name = _Name,
+EmpCode = _EmpCode,
+Salary = _Salary
+where EmpID = _EmpID;
+END IF;
+select _EmpID AS 'EmpID';
+
+
+END
